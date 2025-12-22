@@ -1,0 +1,16 @@
+[versions]
+jackson = "2.16.1"
+
+[libraries]
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310", version.ref = "jackson" }
+springboot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+springboot-starter-aop = { module = "org.springframework.boot:spring-boot-starter-aop" }
+springboot-starter-log4j2 = { module = "org.springframework.boot:spring-boot-starter-log4j2" }
+springboot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+springboot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+springboot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-context = { module = "org.springframework:spring-context" }
+
+[bundles]
+jackson = ["jackson-databind", "jackson-jsr310"]

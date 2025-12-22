@@ -1,0 +1,49 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+repositories {
+    mavenCentral()
+    gradlePluginPortal()
+}
+
+gradlePlugin {
+    plugins {
+        create('application-convention') {
+            id = 'org.bridge.convention.application'
+            implementationClass = 'org.bridge.convention.application.ApplicationConvention'
+        }
+
+        create('test-convention') {
+            id = 'org.bridge.convention.test'
+            implementationClass = 'org.bridge.convention.test.TestConvention'
+        }
+
+        create('spring-convention') {
+            id = 'org.bridge.convention.spring'
+            implementationClass = 'org.bridge.convention.lib.SpringConvention'
+        }
+
+        create('library-convention') {
+            id = 'org.bridge.convention.library'
+            implementationClass = 'org.bridge.convention.lib.LibraryConvention'
+        }
+
+        create('spring-web-convention') {
+            id = 'org.bridge.convention.spring-web'
+            implementationClass = 'org.bridge.convention.lib.SpringWebConvention'
+        }
+
+        create('domain-convention') {
+            id = 'org.bridge.convention.domain'
+            implementationClass = 'org.bridge.convention.lib.DomainConvention'
+        }
+    }
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+    
+    implementation 'org.springframework.boot:spring-boot-gradle-plugin:3.3.1'
+}

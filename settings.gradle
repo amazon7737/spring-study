@@ -1,0 +1,43 @@
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
+
+rootProject.name = 'Practices-for-High-Quality-Java-Code'
+enableFeaturePreview('TYPESAFE_PROJECT_ACCESSORS')
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+def includeModule() {
+    def entryPointName = 'projects'
+    def entryPoint = rootDir.toPath().resolve(entryPointName)
+    
+    if (!Files.exists(entryPoint)) return
+
+    Files.walkFileTree(entryPoint, [FileVisitOption.FOLLOW_LINKS] as Set, Integer.MAX_VALUE, new SimpleFileVisitor<Path>() {
+        @Override
+        FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+            if (file.fileName.toString() == 'build.gradle') {
+                def absolutePath = file.parent.toAbsolutePath().toString()
+                def relativePath = absolutePath.replace(rootDir.absolutePath + File.separator, "")
+                def projectPath = relativePath.replace(File.separator, ":")
+                include projectPath
+            }
+            return FileVisitResult.CONTINUE
+        }
+        
+        @Override
+        FileVisitResult visitFileFailed(Path file, IOException exc) {
+            println "Error accessing file: $file - ${exc.message}"
+            return FileVisitResult.CONTINUE
+        }
+    })
+    
+    new File(entryPoint.toUri()).eachDir { dir ->
+        include "$entryPointName:${dir.name}"
+    }
+}
+
+includeModule()
